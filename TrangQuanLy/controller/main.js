@@ -35,7 +35,7 @@ function renderHTML(data){
         <td><img width="50px" src ="../img/${teacher.hinhAnh}"/></td>
         <td>
             <button class="btn btn-info" id="edit" data-toggle="modal"
-            data-target="#myModal" onclick ="editPro('${teacher.id}')">Edit</button>
+            data-target="#myModal" onclick ="editTeacher('${teacher.id}')">Edit</button>
             <button class="btn btn-danger" onclick="deleteTeacher('${teacher.id}')">Delete</button>
         </td>
         </tr>
@@ -99,4 +99,56 @@ function addTeacher(){
     }
     addTeacher(teacher);
 
+}
+
+/**
+ * Edit
+ */
+
+ function editTeacher(id){
+    var title = "Chỉnh sửa thông tin"
+    document.getElementsByClassName("modal-title")[0].innerHTML = title;
+    var button = `<button class="btn btn-warning" onclick= "updateTeacher(${id})">Update</button>
+    <button id="close" class = "btn btn-danger" data-dismiss="modal">Đóng</button>`;
+    document.getElementsByClassName("modal-footer")[0].innerHTML = button;
+    
+    teacherService.getTeacherByID(id)
+    .then(function(result) {
+        console.log(result);
+        var teacher = result.data;
+        console.log(teacher);
+        getEle("TaiKhoan").value = teacher.taiKhoan;
+        getEle("HoTen").value = teacher.hoTen;
+        getEle("MatKhau").value = teacher.matKhau;
+        getEle("Email").value = teacher.email;
+        getEle("HinhAnh").value = teacher.hinhAnh;
+        getEle("loaiNguoiDung").value = teacher.loaiND;
+        getEle("loaiNgonNgu").value = teacher.ngonNgu;
+        getEle("MoTa").value = teacher.moTa;
+        
+        })
+    .catch(function(error) {
+        console.log(error);});
+}
+
+function updateTeacher(id){
+    var taiKhoan = getEle("TaiKhoan").value;
+    var hoTen = getEle("HoTen").value;
+    var matKhau = getEle("MatKhau").value;
+    var email = getEle("Email").value;
+    var hinhAnh = getEle("HinhAnh").value;
+    var loaiND = getEle("loaiNguoiDung").value;
+    var ngonNgu = getEle("loaiNgonNgu").value;
+    var moTa = getEle("MoTa").value;
+
+    var teacher = new Teacher(id, taiKhoan, hoTen, matKhau, email, loaiND, ngonNgu, moTa, hinhAnh); 
+    teacherService.editTeacherApi(teacher)
+    .then(function(result){
+        alert("Updated");
+        getListProduct();
+        getEle("close").click();
+    })
+    .catch(function(error){
+        console.log(error);
+    });
 }

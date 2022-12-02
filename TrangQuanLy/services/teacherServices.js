@@ -18,7 +18,19 @@ function teacherService(){
             data: product,
         });
     }
-
+    this.getTeacherByID = function(id){
+        return axios({
+            url: `https://637b69a76f4024eac20ce2d3.mockapi.io/api/user/${id}`,
+            method: "GET"
+        });
+    }
+    this.editTeacherApi = function(product){
+        return axios({
+            url: `https://637b69a76f4024eac20ce2d3.mockapi.io/api/user/${product.id}`,
+            method: "PUT",
+            data: product,
+        });
+    }
 
 
 }
