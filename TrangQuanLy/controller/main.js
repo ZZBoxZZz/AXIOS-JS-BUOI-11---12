@@ -59,3 +59,44 @@ function deleteTeacher(id){
         console.log(error);}
         )
 }
+
+getEle("btnThemNguoiDung").onclick = function(){
+    var title = "Thêm giáo viên mới"
+    document.getElementsByClassName("modal-title")[0].innerHTML = title;
+    var button = `<button class="btn btn-success" onclick= "addTeacher()">Thêm</button>
+    <button id="close" class = "btn btn-danger" data-dismiss="modal">Đóng</button>`;
+    document.getElementsByClassName("modal-footer")[0].innerHTML = button;
+    
+}
+
+/**Add 
+ * 
+*/
+
+function addTeacher(){
+    var taiKhoan = getEle("TaiKhoan").value;
+    var hoTen = getEle("HoTen").value;
+    var matKhau = getEle("MatKhau").value;
+    var email = getEle("Email").value;
+    var hinhAnh = getEle("HinhAnh").value;
+    var loaiND = getEle("loaiNguoiDung").value;
+    var ngonNgu = getEle("loaiNgonNgu").value;
+    var moTa = getEle("MoTa").value;
+
+    var teacher = new Teacher("", taiKhoan, hoTen, matKhau, email, hinhAnh, loaiND, ngonNgu, moTa);
+
+    console.log(teacher);
+    function addTeacher(teacher) {
+        teacherService.addTeacherApi(teacher)
+        .then(function(result){
+            alert("Added");
+            getListProduct();
+            getEle("close").click();
+        })
+        .catch(function(error){
+            console.log(error);
+        });
+    }
+    addTeacher(teacher);
+
+}
