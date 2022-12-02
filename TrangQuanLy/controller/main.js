@@ -36,10 +36,26 @@ function renderHTML(data){
         <td>
             <button class="btn btn-info" id="edit" data-toggle="modal"
             data-target="#myModal" onclick ="editPro('${teacher.id}')">Edit</button>
-            <button class="btn btn-danger" onclick="deleteProduct('${teacher.id}')">Delete</button>
+            <button class="btn btn-danger" onclick="deleteTeacher('${teacher.id}')">Delete</button>
         </td>
         </tr>
         `
 
+    });
+    getEle("tblDanhSachNguoiDung").innerHTML = content;
+}
+
+/**
+ * Delete
+ */
+
+function deleteTeacher(id){
+    teacherService.deleteTeacherApi(id)
+    .then(function(result){
+        alert("Deleted");
+        getListProduct();
     })
+    .catch(function(error){
+        console.log(error);}
+        )
 }
